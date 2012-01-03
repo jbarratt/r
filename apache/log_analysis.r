@@ -1,5 +1,6 @@
 # load with 'source("..../log_analysis.r")'
 # returns a data frame with all the data
+library("plyr")
 
 parse_apache_log <- function(logfile) {
   colnames <- c("month", "day", "time", "host_ip", "cruft_1", "site_id", "vhost", "in_bytes", "out_bytes", "ssl", "jiffies", "read_ops", "write_ops", "firstbyte_us", "cruft_2", "client_ip", "ident", "userid", "datetime", "timezone", "request", "status", "reply_bytes", "referrer", "user_agent", "cookie")
@@ -25,15 +26,10 @@ parse_apache_log <- function(logfile) {
   # fix up the host IPs to node names so they are more readable
   log_data$host_ip <- as.factor(sub("^\\d+\\.\\d+\\.\\d+\\.", "n", log_data$host_ip, perl=TRUE))
 
-  # split the request string into a method, resource and version
-  # split the string into a Nx3 matrix -- strsplit makes a list, need to make it back to matrix
-  temp_matrix <- t(sapply(strsplit(log_data$request, " "),c))
-  temp_df <- data.frame("method"=temp_matrix[,1], "resource"=temp_matrix[,2], "http_ver"=temp_matrix[,3], stringsAsFactors=F)
-  temp_df$method <- as.factor(temp_df$method)
-  temp_df$http_ver <- as.factor(temp_df$http_ver)
-
-  log_data <- cbind(log_data, temp_df)
-  rm(temp_matrix, temp_df) #clean up intermediates
+  log_data <- data.frame(log_data, colsplit(log_data$request, split = " ", names = c("method", "resource", "http_ver")))
+  
+  log_data$method <- as.factor(log_data$method)
+  log_data$http_ver <- as.factor(log_data$http_ver)
 
   return(log_data) 
 }
