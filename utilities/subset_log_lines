@@ -1,0 +1,35 @@
+#!/usr/bin/perl
+
+use warnings;
+use strict;
+
+use Getopt::Long;
+use IO::Zlib;
+use IO::Handle; # use this style so we can handle .gz as well
+
+my $opt = {};
+GetOptions($opt, "samplerate=i", "outfile=s");
+
+if(!defined($opt->{samplerate}) || !defined($opt->{"outfile"})) {
+    die "usage: --samplerate <x> --outfile <file> [list of files]\n";
+}
+
+open(my $of, ">", $opt->{"outfile"}) || die "Can't open $opt->{outfile}: $!\n";
+
+print "Processing :::\n";
+for my $file (@ARGV) {
+    my $fh;
+    print ".... $file\n";
+    if($file =~ /\.gz$/) {
+        $fh = new IO::Zlib($file, "rb") or die "Couldn't open $file: $!\n";
+    } else {
+        $fh = new IO::File($file, "r") or die "couldn't open $file: $!\n";
+    }
+    while(my $line = $fh->getline()) {
+        if(int(rand($opt->{samplerate})) == 0) {
+            print $of "$line";
+        }
+    }
+    $fh->close;
+}
+close($of);
