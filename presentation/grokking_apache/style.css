@@ -1,0 +1,29 @@
+h1, h2, h3, h4, h5, h6, .slide {
+  font-family: "PT Serif", "Georgia", "Helvetica Neue", Arial, sans-serif;
+}
+
+.kittehslide > pre {
+  font-size: 155%;
+}
+
+.slide {
+    background: -webkit-gradient(linear, left bottom, left top, from(#bbd), to(#fff));
+    background-color: #eee;
+    background: -moz-linear-gradient(bottom, #bbd, #fff);
+    border-top-left-radius: 20px;
+    -moz-border-radius-topleft: 20px;
+    -webkit-border-top-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+    -moz-border-radius-bottomright: 20px;
+    -webkit-border-bottom-right-radius: 20px;
+}
+
+body.fullScreen {
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-attachment: fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}

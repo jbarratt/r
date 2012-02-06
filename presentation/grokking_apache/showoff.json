@@ -1,0 +1,7 @@
+{ "name": "Grokking Apache Logs with R", 
+    "sections": [ 
+       {"section":"01_what_is_r"} 
+       {"section":"02_getting_data_in"} 
+       {"section":"03_grokking"} 
+    ]
+}

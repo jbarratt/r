@@ -1,0 +1,22 @@
+#!/usr/bin/perl
+
+use warnings;
+use strict;
+use Regexp::Common;
+
+while(<>) {
+  if(!/apache2:\s+\d+\s+/) {
+    # all lines should have apache2: <siteID>, corrupt ones often don't, good filter
+    next;
+  }
+  my $test = $_;
+  $test =~ s/$RE{quoted}//g;
+  if($test =~ /\"/) {
+    # there should be no names left after we nuke all quoted strings
+    # too hard to tell what kind of corruption we are dealing with here
+    next;
+  } else {
+    print "$_"; 
+  }
+}
+
