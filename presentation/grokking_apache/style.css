@@ -2,10 +2,6 @@ h1, h2, h3, h4, h5, h6, .slide {
   font-family: "PT Serif", "Georgia", "Helvetica Neue", Arial, sans-serif;
 }
 
-.kittehslide > pre {
-  font-size: 155%;
-}
-
 .slide {
     background: -webkit-gradient(linear, left bottom, left top, from(#bbd), to(#fff));
     background-color: #eee;
@@ -26,4 +22,9 @@ body.fullScreen {
     -moz-background-size: cover;
     -o-background-size: cover;
     background-size: cover;
+}
+
+.logline {
+  font-size: 150%;
+  font-family: monospace;
 }
