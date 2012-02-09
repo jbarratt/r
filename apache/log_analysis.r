@@ -22,6 +22,10 @@ parse_apache_log <- function(logfile) {
   # And all the requests that don't have 3 chunks
   logs.full <- logs.full[sapply(strsplit(logs.full$request, " "), length) == 3,]
 
+  # in_bytes and out_bytes end up as factors. Boo.
+  logs.full$in_bytes <- as.integer(logs.full$in_bytes)
+  logs.full$out_bytes <- as.integer(logs.full$out_bytes)
+
   # convert SSL into a boolean
   logs.full <- within(logs.full, {
       ssl[ssl == "on"] <- T
