@@ -1,0 +1,29 @@
+#!/usr/bin/perl
+
+use warnings;
+use strict;
+use LWP::Simple qw(get);
+
+my $code = $ARGV[0];
+
+my ($day, $month, $year) = (localtime(time))[3,4,5];
+$month += 1;
+$year += 1900;
+
+my $uri_a = "http://www.wunderground.com/history/airport/$code";
+my $uri_b = "1/1/CustomHistory.html?dayend=$day&monthend=$month&yearend=$year&req_city=NA&req_state=NA&req_statename=NA&format=1";
+
+my %seen = ();
+
+for my $i (1991 .. $year) {
+  my $csv = get("$uri_a/$i/$uri_b");
+  for my $line (split(/\n/, $csv)) {
+    $line =~ s/<br\s+\/>//;
+    my $first = (split(/,/, $line))[0];
+    next unless defined($first);
+    if(!defined($seen{$first})) {
+      $seen{$first}++;
+      print "$line\n";
+    }
+  }
+}
