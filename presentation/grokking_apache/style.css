@@ -3,9 +3,9 @@ h1, h2, h3, h4, h5, h6, .slide {
 }
 
 .slide {
-    background: -webkit-gradient(linear, left bottom, left top, from(#bbd), to(#fff));
+    background: -webkit-gradient(linear, left bottom, left top, from(#dadaed), to(#fff));
     background-color: #eee;
-    background: -moz-linear-gradient(bottom, #bbd, #fff);
+    background: -moz-linear-gradient(bottom, #dadaed, #fff);
     border-top-left-radius: 20px;
     -moz-border-radius-topleft: 20px;
     -webkit-border-top-left-radius: 20px;
